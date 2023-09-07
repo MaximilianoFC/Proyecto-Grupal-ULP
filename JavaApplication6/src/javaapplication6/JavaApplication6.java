@@ -4,7 +4,6 @@ Mario Cesar Sepulveda
 Maximiliano Colin
 Melany Gorosito
 ivana mariel cabrera
-Franco Uriel Sanchez
  */
 package javaapplication6;
 
