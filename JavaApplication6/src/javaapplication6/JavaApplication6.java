@@ -7,17 +7,28 @@ ivana mariel cabrera
  */
 package javaapplication6;
 
-/**
- *
- * @author Villa
- */
+import Proyecto.AccesoADatos.Conexion;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+
 public class JavaApplication6 {
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // TODO code application logic here
+   
+    public static void main(String[] args) throws SQLException {
+        String sql = "INSERT INTO alumno(dni, apellido, nombre,fechaNacimiento,estado)"
+                + "VALUES (65346334,'Perez','Marcos','1980-5-04',1)";
+        PreparedStatement ps = conexion.Prepared
+        int registros = ps.executeUpdate();
+        System.out.println(registros);
+        
+        
+        
+
+        
+        
+        
+        
     }
     
 }
