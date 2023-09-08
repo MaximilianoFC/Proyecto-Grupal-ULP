@@ -29,7 +29,8 @@ public static Connection getConexion() throws ClassNotFoundException{
      
         }catch(SQLException ex){
         JOptionPane.showMessageDialog(null,"Error al conectarse a la BD");
-                       {
+       
+                {
                 JOptionPane.showMessageDialog(null,"Error al cargar los Driver");
                 
                 }
