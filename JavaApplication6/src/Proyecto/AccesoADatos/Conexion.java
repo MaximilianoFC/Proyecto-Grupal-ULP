@@ -13,32 +13,29 @@ public class Conexion {
     private static final String USUARIO="root";
     private static final String PASSWORD="";
     
-    private static connection connection;
+    private static Connection connection;
 
     
     
 private Conexion(){}
 
-public static Proyecto.AccesoADatos.connection getConexion() throws ClassNotFoundException {
+        public static Connection getConexion(){
+    if (connection == null) {
+        try {
+            Class.forName("org.mariadb.jdbc.Driver");
+            connection = DriverManager.getConnection(URL+DB,USUARIO,PASSWORD);
+           JOptionPane.showMessageDialog(null, "Conectado");
 
-        if (connection == null) {
-
-            try {
-                Class.forName("org.mariadb.jdbc.Driver");
-                connection conect = DriverManager
-                        .getConnection(URL + DB + "?useLegacyDatetimeCode=false&serverTimezone=UTC"
-                                + "&user=" + USUARIO + "&password=" + PASSWORD);
-
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "Error al conectarse a la BD");
-
-                {
-                    JOptionPane.showMessageDialog(null, "Error al cargar los Driver");
-                }
-            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al conectarse a la BD");
+           
+        } catch (ClassNotFoundException ex) {
+            JOptionPane.showMessageDialog(null, "Error al cargar los Driver");
+          
         }
-        return connection;
     }
+    return connection;
+}
     
 
 }
