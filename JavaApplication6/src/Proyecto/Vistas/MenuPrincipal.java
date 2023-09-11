@@ -5,10 +5,7 @@
  */
 package Proyecto.Vistas;
 
-/**
- *
- * @author Villa
- */
+
 public class MenuPrincipal extends javax.swing.JFrame {
 
     /**
@@ -44,7 +41,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMenu10 = new javax.swing.JMenu();
         jPopupMenu1 = new javax.swing.JPopupMenu();
         jPopupMenu2 = new javax.swing.JPopupMenu();
-        jDesktopPane1 = new javax.swing.JDesktopPane();
+        jDPEscritorio = new javax.swing.JDesktopPane();
         jMenuListadoPorMaterias = new javax.swing.JMenuBar();
         jMAlumno = new javax.swing.JMenu();
         jMenuFormularioAlumno = new javax.swing.JMenuItem();
@@ -89,20 +86,25 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
-        jDesktopPane1.setLayout(jDesktopPane1Layout);
-        jDesktopPane1Layout.setHorizontalGroup(
-            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 599, Short.MAX_VALUE)
+        javax.swing.GroupLayout jDPEscritorioLayout = new javax.swing.GroupLayout(jDPEscritorio);
+        jDPEscritorio.setLayout(jDPEscritorioLayout);
+        jDPEscritorioLayout.setHorizontalGroup(
+            jDPEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 600, Short.MAX_VALUE)
         );
-        jDesktopPane1Layout.setVerticalGroup(
-            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 466, Short.MAX_VALUE)
+        jDPEscritorioLayout.setVerticalGroup(
+            jDPEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 465, Short.MAX_VALUE)
         );
 
         jMAlumno.setText("Alumno");
 
         jMenuFormularioAlumno.setText("Formulario de Alumno");
+        jMenuFormularioAlumno.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuFormularioAlumnoActionPerformed(evt);
+            }
+        });
         jMAlumno.add(jMenuFormularioAlumno);
 
         jMenuListadoPorMaterias.add(jMAlumno);
@@ -140,15 +142,27 @@ public class MenuPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopPane1)
+            .addComponent(jDPEscritorio)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(jDPEscritorio, javax.swing.GroupLayout.Alignment.TRAILING)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jMenuFormularioAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuFormularioAlumnoActionPerformed
+        //abrir menu formulario Alumno  >> maxi
+        
+        jDPEscritorio.removeAll();
+        jDPEscritorio.repaint();
+        MenuAlumno MA = new MenuAlumno();
+        MA.setVisible(true);
+        jDPEscritorio.add(MA);
+        jDPEscritorio.moveToFront(MA);
+        
+    }//GEN-LAST:event_jMenuFormularioAlumnoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -186,7 +200,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JDesktopPane jDesktopPane1;
+    private javax.swing.JDesktopPane jDPEscritorio;
     private javax.swing.JMenu jMAdministracion;
     private javax.swing.JMenu jMAlumno;
     private javax.swing.JMenu jMConsultas;

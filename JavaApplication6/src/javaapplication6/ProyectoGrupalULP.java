@@ -1,12 +1,24 @@
 /*
-miembros del grupo:
+miembros del grupo 56*:
 Mario Cesar Sepulveda
 Maximiliano Colin
 Melany Gorosito
 ivana mariel cabrera
 
+
+
+Trabajos:
+Maxi>interfaz de menus.
+Ivana >clases entidades
+Mario >Clases Acceso(empezar con una)
+Melany > Clases Acceso(empezar con una)
+
+Links:
 token:
 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
+https://toedter.com/jcalendar/
+
+
  */
 package javaapplication6;
 
@@ -27,11 +39,11 @@ public class ProyectoGrupalULP {
         
         //ejemplo de insercion de un alumno:
        //**Comentar todo el ejemplo la segunda vez que se corra el programa
-       //sino tira error por dupplicado**.
+       //sino tira error por duplicado**.
        
 
         // insertar alumno: 
-        String sqlInsert = "INSERT INTO alumno (dni, apellido, nombre, fechaNacimiento, estado) VALUES (53564453, 'perez','mariano', 1990-10-03,1)";
+        String sqlInsert = "INSERT INTO alumno (dni, apellido, nombre, fechaNacimiento, estado) VALUES (7567456, 'Antonia','Maria', '1950-05-18',1)";
 
         try {
             // Crear un PreparedStatement
