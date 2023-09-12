@@ -86,6 +86,8 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jDPEscritorio.setPreferredSize(new java.awt.Dimension(650, 600));
+
         javax.swing.GroupLayout jDPEscritorioLayout = new javax.swing.GroupLayout(jDPEscritorio);
         jDPEscritorio.setLayout(jDPEscritorioLayout);
         jDPEscritorioLayout.setHorizontalGroup(
@@ -94,7 +96,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         );
         jDPEscritorioLayout.setVerticalGroup(
             jDPEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 465, Short.MAX_VALUE)
+            .addGap(0, 650, Short.MAX_VALUE)
         );
 
         jMAlumno.setText("Alumno");
@@ -112,6 +114,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMMateria.setText("Materia");
 
         jMenuFormularioMateria.setText("Formulario de Materia");
+        jMenuFormularioMateria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuFormularioMateriaActionPerformed(evt);
+            }
+        });
         jMMateria.add(jMenuFormularioMateria);
 
         jMenuListadoPorMaterias.add(jMMateria);
@@ -119,9 +126,19 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMAdministracion.setText("Administracion");
 
         jMenuInscripciones.setText("Manejo Inscripciones");
+        jMenuInscripciones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuInscripcionesActionPerformed(evt);
+            }
+        });
         jMAdministracion.add(jMenuInscripciones);
 
         jMenuNotas.setText("Notas");
+        jMenuNotas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuNotasActionPerformed(evt);
+            }
+        });
         jMAdministracion.add(jMenuNotas);
 
         jMenuListadoPorMaterias.add(jMAdministracion);
@@ -129,6 +146,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMConsultas.setText("Consultas");
 
         jMenuItem5.setText("Alumnos por Materia");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
         jMConsultas.add(jMenuItem5);
 
         jMenuListadoPorMaterias.add(jMConsultas);
@@ -142,11 +164,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDPEscritorio)
+            .addComponent(jDPEscritorio, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDPEscritorio, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(jDPEscritorio, javax.swing.GroupLayout.DEFAULT_SIZE, 650, Short.MAX_VALUE)
         );
 
         pack();
@@ -163,6 +185,53 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jDPEscritorio.moveToFront(MA);
         
     }//GEN-LAST:event_jMenuFormularioAlumnoActionPerformed
+
+    private void jMenuFormularioMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuFormularioMateriaActionPerformed
+        // abrir menu formulario materias >>maxi
+        jDPEscritorio.removeAll();
+        jDPEscritorio.repaint();
+        MenuMaterias MM = new MenuMaterias();
+        MM.setVisible(true);
+        jDPEscritorio.add(MM);
+        jDPEscritorio.moveToFront(MM);
+        
+        
+        
+        
+    }//GEN-LAST:event_jMenuFormularioMateriaActionPerformed
+
+    private void jMenuInscripcionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuInscripcionesActionPerformed
+        // Abrir menu manejo inscripciones
+        jDPEscritorio.removeAll();
+        jDPEscritorio.repaint();
+        MenuInscripciones MI = new MenuInscripciones();
+        MI.setVisible(true);
+        jDPEscritorio.add(MI);
+        jDPEscritorio.moveToFront(MI);
+        
+    }//GEN-LAST:event_jMenuInscripcionesActionPerformed
+
+    private void jMenuNotasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuNotasActionPerformed
+        // abrir menu carga notas 
+        jDPEscritorio.removeAll();
+        jDPEscritorio.repaint();
+        MenuCargaNotas MC = new MenuCargaNotas();
+        MC.setVisible(true);
+        jDPEscritorio.add(MC);
+        jDPEscritorio.moveToFront(MC);
+        
+    }//GEN-LAST:event_jMenuNotasActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+       // abrir menu consulta de alumnos x materia
+        jDPEscritorio.removeAll();
+        jDPEscritorio.repaint();
+        MenuConsultaAlumnos MCA = new MenuConsultaAlumnos();
+        MCA.setVisible(true);
+        jDPEscritorio.add(MCA);
+        jDPEscritorio.moveToFront(MCA);
+        
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     /**
      * @param args the command line arguments

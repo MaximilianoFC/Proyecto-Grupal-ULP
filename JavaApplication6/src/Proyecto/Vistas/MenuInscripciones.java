@@ -39,9 +39,12 @@ public class MenuInscripciones extends javax.swing.JInternalFrame {
         jBSalir = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
 
-        setMinimumSize(new java.awt.Dimension(600, 550));
+        setClosable(true);
+        setMaximizable(true);
+        setResizable(true);
+        setMinimumSize(new java.awt.Dimension(645, 600));
         setName(""); // NOI18N
-        setPreferredSize(new java.awt.Dimension(600, 550));
+        setPreferredSize(new java.awt.Dimension(645, 600));
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jLabel1.setText("Formulario de Inscripcion");
@@ -114,12 +117,12 @@ public class MenuInscripciones extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(156, 156, 156)
                         .addComponent(jLabel3)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(41, 49, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(17, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
