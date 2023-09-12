@@ -8,9 +8,16 @@ Interfaz de menu alumno >> maxi
  */
 package Proyecto.Vistas;
 
+import Proyecto.AccesoADatos.Alumno;
+import Proyecto.AccesoADatos.Conexion;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.Date;
+
 
 public class MenuAlumno extends javax.swing.JInternalFrame {
-
+ Connection con = Conexion.getConexion();
     /**
      * Creates new form MenuAlumno
      */
@@ -38,12 +45,12 @@ public class MenuAlumno extends javax.swing.JInternalFrame {
         jTFApellido = new javax.swing.JTextField();
         jTFNombre = new javax.swing.JTextField();
         jBEstado = new javax.swing.JRadioButton();
-        jDateFechaNac = new com.toedter.calendar.JDateChooser();
         jBBuscar = new javax.swing.JButton();
         jBSalir = new javax.swing.JButton();
         jBEliminar = new javax.swing.JButton();
         jBNuevo = new javax.swing.JButton();
         jBGuardar = new javax.swing.JButton();
+        jDateFechaNac = new com.toedter.calendar.JDateChooser();
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel1.setText("Nombre:");
@@ -78,6 +85,11 @@ public class MenuAlumno extends javax.swing.JInternalFrame {
 
         jBNuevo.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jBNuevo.setText("Nuevo");
+        jBNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBNuevoActionPerformed(evt);
+            }
+        });
 
         jBGuardar.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jBGuardar.setText("Guardar");
@@ -97,6 +109,16 @@ public class MenuAlumno extends javax.swing.JInternalFrame {
                 .addGap(69, 69, 69)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                        .addComponent(jBNuevo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jBEliminar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jBGuardar)
+                        .addGap(12, 12, 12)
+                        .addComponent(jBSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jBEstado)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -106,23 +128,9 @@ public class MenuAlumno extends javax.swing.JInternalFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jTFDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(52, 52, 52)
-                                .addComponent(jBBuscar)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
-                                .addComponent(jBNuevo)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jBEliminar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jBGuardar)
-                                .addGap(12, 12, 12))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jDateFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addComponent(jBSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18))))
+                                .addComponent(jBBuscar))
+                            .addComponent(jDateFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -146,10 +154,10 @@ public class MenuAlumno extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jBEstado))
-                .addGap(43, 43, 43)
+                .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5)
-                    .addComponent(jDateFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jDateFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBEliminar)
@@ -165,6 +173,56 @@ public class MenuAlumno extends javax.swing.JInternalFrame {
     private void jBSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSalirActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jBSalirActionPerformed
+
+    private void jBNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBNuevoActionPerformed
+      //Parte de Mario
+        //Parte del documento
+        String texto = jTFDocumento.getText();
+        int documento = Integer.parseInt(texto);
+
+        //Parte del Apellido
+        String apellido = jTFApellido.getText();
+       
+        //Parte del nombre
+        String nombre = jTFNombre.getText();
+       
+        //parte del valor logico
+        boolean activo = jBEstado.isSelected();
+       
+        //parte de la fecha
+        Date fechaNac = jDateFechaNac.getDate();
+        if (documento >= -1 && !"".equals(apellido) && !"".equals(nombre)) {
+        //insertar valores
+        String sqlInsert = "INSERT INTO alumno (dni, apellido, nombre, fechaNacimiento, estado) VALUES (?, ?, ?, ?, ?)";
+
+        try {
+            // Iniciamos
+            PreparedStatement preparedStatement = con.prepareStatement(sqlInsert);
+
+            // Establecemos los valores a subir
+            preparedStatement.setInt(1, documento);
+            preparedStatement.setString(2, apellido);
+            preparedStatement.setString(3, nombre);
+            preparedStatement.setDate(4, new java.sql.Date(fechaNac.getTime()));
+            preparedStatement.setBoolean(5, activo);
+
+            // Enviamos
+            int filasAfectadas = preparedStatement.executeUpdate();
+
+            if (filasAfectadas > 0) {
+                System.out.println("Inserción exitosa.");
+            } else {
+                System.out.println("La inserción no tuvo éxito.");
+            }
+
+            // Cerrar la conexión
+            preparedStatement.close();
+            con.close();
+            } catch (SQLException e) {
+                System.out.println("Error al insertar el alumno: " + e.getMessage());
+            }
+        }
+    }//GEN-LAST:event_jBNuevoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

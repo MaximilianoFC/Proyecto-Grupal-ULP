@@ -35,14 +35,15 @@ public class ProyectoGrupalULP {
            //Maximiliano >>
         // conectarse a la base de datos:
         Connection con = Conexion.getConexion();
-
+        
         
         //ejemplo de insercion de un alumno:
        //**Comentar todo el ejemplo la segunda vez que se corra el programa
        //sino tira error por duplicado**.
-       
+      
 
         // insertar alumno: 
+        /*
         String sqlInsert = "INSERT INTO alumno (dni, apellido, nombre, fechaNacimiento, estado) VALUES (7567456, 'Antonia','Maria', '1950-05-18',1)";
 
         try {
@@ -65,12 +66,12 @@ public class ProyectoGrupalULP {
         } catch (SQLException e) {
             System.out.println("Error al insertar el alumno: " + e.getMessage());
         }
+    
+        
+        
+        */
+        
     }
-        
-        
-        
-        
-        
     }
     
 
