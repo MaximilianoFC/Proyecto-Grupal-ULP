@@ -8,15 +8,18 @@ ivana mariel cabrera
 
 
 Trabajos:
-Maxi>interfaz de menus.
+Maxi>inscripciones acceso
 Ivana >clases entidades
-Mario >Clases Acceso(empezar con una)
-Melany > Clases Acceso(empezar con una)
+Mario >Clase acceso alumnos 
+Melany > 
 
 Links:
 token:
 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
 https://toedter.com/jcalendar/
+
+token2:
+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
 
 
  */
