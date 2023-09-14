@@ -25,7 +25,7 @@ public class MateriaData {
     
     
     public void guardarMateria(Materia materia){
-        String sql="INSERT INTO materia (nombre, año, estado)"
+        String sql="INSERT INTO materia (nombre, anio, estado)"
                 +"VALUES (?, ?, ?)";
         
         try {
@@ -51,7 +51,7 @@ public class MateriaData {
     
     
     public void modificarMateria(Materia materia){
-        String sql="UPDATE materia SET nombre = ?, año = ?"
+        String sql="UPDATE materia SET nombre = ?, anio = ?"
                 + "WHERE idMateria = ?";
         
         try {
