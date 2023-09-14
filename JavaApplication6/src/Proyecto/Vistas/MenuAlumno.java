@@ -8,12 +8,15 @@ Interfaz de menu alumno >> maxi
  */
 package Proyecto.Vistas;
 
-import Proyecto.AccesoADatos.Alumno;
+import Entidades.Alumno;
 import Proyecto.AccesoADatos.Conexion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 
 public class MenuAlumno extends javax.swing.JInternalFrame {
@@ -21,6 +24,9 @@ public class MenuAlumno extends javax.swing.JInternalFrame {
     /**
      * Creates new form MenuAlumno
      */
+ 
+    
+ 
     public MenuAlumno() {
         initComponents();
     }
@@ -75,6 +81,11 @@ public class MenuAlumno extends javax.swing.JInternalFrame {
         jLabel6.setText("Alumno");
 
         jBBuscar.setText("Buscar");
+        jBBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBBuscarActionPerformed(evt);
+            }
+        });
 
         jBSalir.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jBSalir.setText("Salir");
@@ -86,6 +97,11 @@ public class MenuAlumno extends javax.swing.JInternalFrame {
 
         jBEliminar.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jBEliminar.setText("Eliminar");
+        jBEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBEliminarActionPerformed(evt);
+            }
+        });
 
         jBNuevo.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jBNuevo.setText("Nuevo");
@@ -97,6 +113,11 @@ public class MenuAlumno extends javax.swing.JInternalFrame {
 
         jBGuardar.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jBGuardar.setText("Guardar");
+        jBGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBGuardarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -214,21 +235,193 @@ public class MenuAlumno extends javax.swing.JInternalFrame {
             int filasAfectadas = preparedStatement.executeUpdate();
 
             if (filasAfectadas > 0) {
-                System.out.println("Inserción exitosa.");
+                JFrame parent = new JFrame();
+                JOptionPane.showMessageDialog(parent, "Inserción exitosa.");
             } else {
-                System.out.println("La inserción no tuvo éxito.");
+                JFrame parent = new JFrame();
+                JOptionPane.showMessageDialog(parent, "La inserción no tuvo éxito.");
             }
 
             // Cerrar la conexión
             preparedStatement.close();
-            con.close();
             } catch (SQLException e) {
-                System.out.println("Error al insertar el alumno: " + e.getMessage());
+                JFrame parent = new JFrame();
+                String error = e.getMessage();
+                JOptionPane.showMessageDialog(parent, "Error al insertar el alumno\n"+error);
+
             }
         }
     }//GEN-LAST:event_jBNuevoActionPerformed
 
+    
+    
+    private void jBGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBGuardarActionPerformed
+           // Parte de Mario
+    // Parte del documento
+    String texto = jTFDocumento.getText();
+    int documento = Integer.parseInt(texto);
 
+    // Parte del Apellido
+    String apellido = jTFApellido.getText();
+
+    // Parte del nombre
+    String nombre = jTFNombre.getText();
+
+    // Parte del valor lógico
+    boolean activo = jBEstado.isSelected();
+
+    // Parte de la fecha
+    Date fechaNac = jDateFechaNac.getDate();
+    
+    // Identificador único del alumno
+    int idAlumno = obtenerIdAlumno(documento);
+    System.out.println(idAlumno);
+    if (documento >= -1 && !"".equals(apellido) && !"".equals(nombre)) {
+        // Query de actualización
+        String sqlUpdate = "UPDATE alumno SET dni = ?, apellido = ?, nombre = ?, fechaNacimiento = ?, estado = ? WHERE idAlumno = ?";
+
+        try {
+            // Iniciamos
+            PreparedStatement preparedStatement = con.prepareStatement(sqlUpdate);
+
+            // Establecemos los valores a actualizar
+            preparedStatement.setInt(1, documento);
+            preparedStatement.setString(2, apellido);
+            preparedStatement.setString(3, nombre);
+            preparedStatement.setDate(4, new java.sql.Date(fechaNac.getTime()));
+            preparedStatement.setBoolean(5, activo);
+            preparedStatement.setInt(6, idAlumno);
+
+            // Enviamos
+            int filasAfectadas = preparedStatement.executeUpdate();
+
+            if (filasAfectadas > 0) {
+                JFrame parent = new JFrame();
+                JOptionPane.showMessageDialog(parent, "Actualización exitosa.");
+            } else {
+                JFrame parent = new JFrame();
+                JOptionPane.showMessageDialog(parent, "La actualización no tuvo éxito.");
+            }
+
+            // Cerrar la conexión
+            preparedStatement.close();
+        } catch (SQLException e) {
+            JFrame parent = new JFrame();
+            String error = e.getMessage();
+            JOptionPane.showMessageDialog(parent, "Error al actualizar el alumno\n"+error);
+        }
+    }
+    }//GEN-LAST:event_jBGuardarActionPerformed
+
+    private int obtenerIdAlumno(int documento) {
+    // Query para obtener el ID del alumno con el dni apellido y nombre
+    String sqlSelect = "SELECT idAlumno FROM alumno WHERE dni = ?";
+    int idAlumno = -1; // Valor predeterminado
+    
+    
+    try {
+        // Iniciamos
+        PreparedStatement preparedStatement = con.prepareStatement(sqlSelect);
+
+        // Establecemos los valores para la consulta
+        preparedStatement.setInt(1, documento);
+
+
+        // Ejecutamos la consulta y obtenemos el resultado
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        if (resultSet.next()) {
+            idAlumno = resultSet.getInt("idAlumno");
+        }
+
+        // Cerrar la conexión y el resultado
+        resultSet.close();
+        preparedStatement.close();
+        
+    } catch (SQLException e) {
+        JFrame parent = new JFrame();
+        String error = e.getMessage();
+        JOptionPane.showMessageDialog(parent, "Error al obtener el ID del alumno\n"+error);
+    }
+
+    return idAlumno;
+}
+    
+    private void jBEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBEliminarActionPerformed
+           // Query para eliminar un alumno por su DNI
+    String sqlDelete = "DELETE FROM alumno WHERE dni = ?";
+    String dni = jTFDocumento.getText();
+    try {
+        // Iniciamos
+        PreparedStatement preparedStatement = con.prepareStatement(sqlDelete);
+
+        // Establecemos el valor del DNI para la eliminación
+        preparedStatement.setString(1, dni);
+
+        // Enviamos
+        int filasAfectadas = preparedStatement.executeUpdate();
+
+        if (filasAfectadas > 0) {
+            JFrame parent = new JFrame();
+            JOptionPane.showMessageDialog(parent, "Eliminación exitosa.");
+        } else {
+            JFrame parent = new JFrame();
+            JOptionPane.showMessageDialog(parent, "No se encontró ningún alumno con ese DNI.");
+        }
+
+        // Cerrar la conexión
+        preparedStatement.close();
+    } catch (SQLException e) {
+        JFrame parent = new JFrame();
+        String error = e.getMessage();
+        JOptionPane.showMessageDialog(parent, "Error al eliminar el alumno\n"+error);
+    }
+    }//GEN-LAST:event_jBEliminarActionPerformed
+
+    private void jBBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBuscarActionPerformed
+         // Query para consultar un alumno por su DNI
+    String sqlSelect = "SELECT dni, apellido, nombre, fechaNacimiento, estado FROM alumno WHERE dni = ?";
+    String dni = jTFDocumento.getText();
+    try {
+        // Iniciamos
+        PreparedStatement preparedStatement = con.prepareStatement(sqlSelect);
+
+        // Establecemos el valor del DNI para la consulta
+        preparedStatement.setString(1, dni);
+
+        // Ejecutamos la consulta y obtenemos el resultado
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        if (resultSet.next()) {
+            // guardamos lo obtenido en variables
+            int documento = resultSet.getInt("dni");
+            String apellido = resultSet.getString("apellido");
+            String nombre = resultSet.getString("nombre");
+            Date fechaNac = resultSet.getDate("fechaNacimiento");
+            boolean activo = resultSet.getBoolean("estado");
+            
+            // usamos los valores
+
+            jTFApellido.setText(apellido);
+            jTFNombre.setText(nombre);
+            jBEstado.setSelected(activo);
+            jDateFechaNac.setDate(fechaNac);
+        } else {
+            JFrame parent = new JFrame();
+            JOptionPane.showMessageDialog(parent, "No se encontró ningún alumno con ese DNI.");
+        }
+
+        // Cerrar la conexión y el resultado
+        resultSet.close();
+        preparedStatement.close();
+    } catch (SQLException e) {
+        JFrame parent = new JFrame();
+        String error = e.getMessage();
+        JOptionPane.showMessageDialog(parent, "Error al consultar el alumno\n"+error);
+    }
+    }//GEN-LAST:event_jBBuscarActionPerformed
+
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jBBuscar;
