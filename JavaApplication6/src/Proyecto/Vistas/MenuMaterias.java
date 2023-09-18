@@ -38,9 +38,9 @@ public class MenuMaterias extends javax.swing.JInternalFrame {
         jTAño = new javax.swing.JTextField();
         jBEliminar = new javax.swing.JButton();
         jRBEstado = new javax.swing.JRadioButton();
-        jButton2 = new javax.swing.JButton();
+        jBNuevo = new javax.swing.JButton();
         jBGuardar = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        jBSalir = new javax.swing.JButton();
         jBBuscar = new javax.swing.JButton();
 
         setClosable(true);
@@ -82,8 +82,13 @@ public class MenuMaterias extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton2.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jButton2.setText("Nuevo");
+        jBNuevo.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jBNuevo.setText("Nuevo");
+        jBNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBNuevoActionPerformed(evt);
+            }
+        });
 
         jBGuardar.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jBGuardar.setText("Guardar");
@@ -93,8 +98,13 @@ public class MenuMaterias extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton4.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jButton4.setText("Salir");
+        jBSalir.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jBSalir.setText("Salir");
+        jBSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBSalirActionPerformed(evt);
+            }
+        });
 
         jBBuscar.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jBBuscar.setText("Buscar");
@@ -132,13 +142,13 @@ public class MenuMaterias extends javax.swing.JInternalFrame {
                         .addGap(43, 43, 43))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2)
+                .addComponent(jBNuevo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jBEliminar)
                 .addGap(12, 12, 12)
                 .addComponent(jBGuardar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jBSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18))
         );
         layout.setVerticalGroup(
@@ -166,9 +176,9 @@ public class MenuMaterias extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 116, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBEliminar)
-                    .addComponent(jButton2)
+                    .addComponent(jBNuevo)
                     .addComponent(jBGuardar)
-                    .addComponent(jButton4))
+                    .addComponent(jBSalir))
                 .addContainerGap())
         );
 
@@ -239,13 +249,26 @@ public class MenuMaterias extends javax.swing.JInternalFrame {
         materiaData.eliminarMateria(idMateria);
     }//GEN-LAST:event_jBEliminarActionPerformed
 
+    private void jBSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSalirActionPerformed
+        // TODO add your handling code here:
+        super.dispose();
+    }//GEN-LAST:event_jBSalirActionPerformed
+
+    private void jBNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBNuevoActionPerformed
+        // TODO add your handling code here:
+        jTCodigo.setText("");
+        jTNombre.setText("");
+        jTAño.setText("");
+        jRBEstado.setSelected(isIcon);
+    }//GEN-LAST:event_jBNuevoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBBuscar;
     private javax.swing.JButton jBEliminar;
     private javax.swing.JButton jBGuardar;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jBNuevo;
+    private javax.swing.JButton jBSalir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
