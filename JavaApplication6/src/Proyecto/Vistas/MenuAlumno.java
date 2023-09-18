@@ -8,7 +8,7 @@ Interfaz de menu alumno >> maxi
  */
 package Proyecto.Vistas;
 
-import Entidades.Alumno;
+
 import Proyecto.AccesoADatos.Conexion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -196,9 +196,14 @@ public class MenuAlumno extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSalirActionPerformed
-        // TODO add your handling code here:
+        getFrame().setVisible(true);
+        super.dispose();
     }//GEN-LAST:event_jBSalirActionPerformed
 
+    private MenuAlumno getFrame(){
+    return this;
+    }
+    
     private void jBNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBNuevoActionPerformed
       //Parte de Mario
         //Parte del documento
