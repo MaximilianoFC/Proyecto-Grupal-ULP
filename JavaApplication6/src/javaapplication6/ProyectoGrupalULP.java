@@ -25,7 +25,9 @@ hoy probamos el github x2
  */
 package javaapplication6;
 
+
 import Proyecto.AccesoADatos.Conexion;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -73,7 +75,7 @@ public class ProyectoGrupalULP {
         
         
         */
-        
+      
     }
     }
     

@@ -56,7 +56,7 @@ public class Materia {
         this.anioMateria = anioMateria;
     }
 
-    public boolean isEstado() {
+    public boolean isActivo() {
         return estado;
     }
 

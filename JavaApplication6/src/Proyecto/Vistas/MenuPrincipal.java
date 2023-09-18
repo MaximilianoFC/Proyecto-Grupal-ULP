@@ -5,6 +5,10 @@
  */
 package Proyecto.Vistas;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 public class MenuPrincipal extends javax.swing.JFrame {
 
@@ -215,10 +219,16 @@ public class MenuPrincipal extends javax.swing.JFrame {
         // abrir menu carga notas 
         jDPEscritorio.removeAll();
         jDPEscritorio.repaint();
-        MenuCargaNotas MC = new MenuCargaNotas();
-        MC.setVisible(true);
+        MenuCargaNotas MC; 
+        try {
+            MC = new MenuCargaNotas();
+            MC.setVisible(true);
         jDPEscritorio.add(MC);
         jDPEscritorio.moveToFront(MC);
+        
+        } catch (SQLException ex) {
+            Logger.getLogger(MenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }//GEN-LAST:event_jMenuNotasActionPerformed
 
