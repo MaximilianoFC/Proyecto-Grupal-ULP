@@ -8,6 +8,7 @@ package Proyecto.Vistas;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 
 
 public class MenuPrincipal extends javax.swing.JFrame {
@@ -17,6 +18,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
      */
     public MenuPrincipal() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -56,7 +58,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMenuNotas = new javax.swing.JMenuItem();
         jMConsultas = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
-        jMSalir = new javax.swing.JMenu();
 
         jMenu1.setText("File");
         jMenuBar2.add(jMenu1);
@@ -158,9 +159,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMConsultas.add(jMenuItem5);
 
         jMenuListadoPorMaterias.add(jMConsultas);
-
-        jMSalir.setText("Salir");
-        jMenuListadoPorMaterias.add(jMSalir);
 
         setJMenuBar(jMenuListadoPorMaterias);
 
@@ -284,7 +282,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMAlumno;
     private javax.swing.JMenu jMConsultas;
     private javax.swing.JMenu jMMateria;
-    private javax.swing.JMenu jMSalir;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu10;
     private javax.swing.JMenu jMenu2;

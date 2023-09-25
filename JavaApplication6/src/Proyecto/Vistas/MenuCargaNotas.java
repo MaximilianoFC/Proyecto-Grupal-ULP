@@ -202,7 +202,7 @@ public class MenuCargaNotas extends javax.swing.JInternalFrame {
             for (int i = 0; i <= (jTable1.getRowCount() - 1); i++) {
 
                 //el valor de la nota nueva se toma de la tabla, columna 4 es la nota.
-                int nota = Integer.parseInt(jTable1.getValueAt(i, 4).toString());
+                int nota = Integer.parseInt(jTable1.getValueAt(i, 4).toString());                
                 ps.setInt(1, nota);
             
                 //valor del idInscripto se lo toma de la tabla, columna 0 es el idinscripto.
@@ -216,8 +216,11 @@ public class MenuCargaNotas extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(rootPane, "notas guardadas");
        
         } catch (SQLException ex) {
-            Logger.getLogger(MenuCargaNotas.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            JOptionPane.showMessageDialog(rootPane, "error al guardar notas, ingrese numeros enteros.");
+         }
+         catch (NumberFormatException ex){
+             JOptionPane.showMessageDialog(rootPane, "error al guardar notas, ingrese numeros enteros");
+         }
     }//GEN-LAST:event_jBGuardarActionPerformed
 
     private void jBSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSalirActionPerformed
