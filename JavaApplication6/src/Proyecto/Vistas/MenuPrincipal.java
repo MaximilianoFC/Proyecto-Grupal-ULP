@@ -58,6 +58,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMenuNotas = new javax.swing.JMenuItem();
         jMConsultas = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
+        jMSalir = new javax.swing.JMenu();
 
         jMenu1.setText("File");
         jMenuBar2.add(jMenu1);
@@ -160,6 +161,14 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         jMenuListadoPorMaterias.add(jMConsultas);
 
+        jMSalir.setText("Salir");
+        jMSalir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMSalirMouseClicked(evt);
+            }
+        });
+        jMenuListadoPorMaterias.add(jMSalir);
+
         setJMenuBar(jMenuListadoPorMaterias);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -241,6 +250,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
+    private void jMSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMSalirMouseClicked
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_jMSalirMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -282,6 +296,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMAlumno;
     private javax.swing.JMenu jMConsultas;
     private javax.swing.JMenu jMMateria;
+    private javax.swing.JMenu jMSalir;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu10;
     private javax.swing.JMenu jMenu2;
