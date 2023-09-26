@@ -5,6 +5,24 @@
  */
 package Proyecto.Vistas;
 
+import Entidades.Alumno;
+import Entidades.Inscripcion;
+import Entidades.Materia;
+import Proyecto.AccesoADatos.AlumnosData;
+import Proyecto.AccesoADatos.Conexion;
+import Proyecto.AccesoADatos.InscripcionData;
+import Proyecto.AccesoADatos.MateriaData;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Villa
@@ -14,9 +32,54 @@ public class MenuInscripciones extends javax.swing.JInternalFrame {
     /**
      * Creates new form MenuInscripciones
      */
-    public MenuInscripciones() {
+    Connection con = Conexion.getConexion();
+    
+  private List<Materia> ListaM;
+    private List<Alumno> ListaA;
+    
+    private InscripcionData inscData;
+    private MateriaData mData;
+    private AlumnosData aData;
+    
+    //Para armar las tablas por códigos//
+    private DefaultTableModel modelo;
+    
+    public MenuInscripciones() throws SQLException {
         initComponents();
+        aData = new AlumnosData();
+        cargarAlumnos();
+        modelo = new DefaultTableModel();
+        inscData = new InscripcionData();       
+        armarCabeceraTabla();        
+        inscData = new InscripcionData();      
+        
     }
+     public List<Materia> obtenerMateriasCursadas (int idAlumno){
+        
+        ArrayList<Materia> materias=new ArrayList<>();
+        
+        String sql = "Select inscripcion.idMateria, nombre, anio FROM Inscripcion,"
+                    + "materia WHERE inscripcion,idMateria = materia.idMateria" +
+                "AND Inscripcion.idAlumno = ?;";
+    try{    
+        PreparedStatement ps= con.prepareStatement(sql);
+        ps.setInt(1, idAlumno);
+        ResultSet rs=ps.executeQuery();
+        while(rs.next()){
+        
+            Materia materia=new Materia();
+            materia.setIdMateria(rs.getInt("idMateria"));
+            materia.setNombre(rs.getString("nombre"));
+            materias.add(materia);
+        }
+        ps.close();
+    } catch (SQLException ex){
+        JOptionPane.showMessageDialog(null, "Error al acceder a la tabla de Inscripcion");
+    
+    }
+        return null;
+     }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -52,10 +115,13 @@ public class MenuInscripciones extends javax.swing.JInternalFrame {
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel2.setText("Seleccione un alumno;:");
 
-        jCBAlumnos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         jRBMateriasInscriptas.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jRBMateriasInscriptas.setText("Materias Inscriptas");
+        jRBMateriasInscriptas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRBMateriasInscriptasActionPerformed(evt);
+            }
+        });
 
         jRBMateriasNoInscriptas.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jRBMateriasNoInscriptas.setText("Materias no inscriptas");
@@ -85,7 +151,7 @@ public class MenuInscripciones extends javax.swing.JInternalFrame {
         jBSalir.setText("Salir");
 
         jLabel3.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jLabel3.setText("Listadom de Materias:");
+        jLabel3.setText("Listado de Materias:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -126,7 +192,7 @@ public class MenuInscripciones extends javax.swing.JInternalFrame {
                 .addComponent(jLabel1)
                 .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCBAlumnos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jCBAlumnos, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addGap(42, 42, 42)
                 .addComponent(jLabel3)
@@ -136,7 +202,7 @@ public class MenuInscripciones extends javax.swing.JInternalFrame {
                     .addComponent(jRBMateriasNoInscriptas))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBSalir)
                     .addComponent(jBAnularIns)
@@ -148,14 +214,55 @@ public class MenuInscripciones extends javax.swing.JInternalFrame {
 
     private void jRBMateriasNoInscriptasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRBMateriasNoInscriptasActionPerformed
         // TODO add your handling code here:
+          borrarFilaTabla();
+        jRBMateriasInscriptas.setSelected(false);
+        cargaDatosNoInscriptas();
+        jBInscribir.setEnabled(false);
+        jBInscribir.setEnabled(true);
     }//GEN-LAST:event_jRBMateriasNoInscriptasActionPerformed
 
+    private void jRBMateriasInscriptasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRBMateriasInscriptasActionPerformed
+        // TODO add your handling code here:
+         //borrarFilaTabla();
+        jRBMateriasNoInscriptas.setSelected(false);
+        cargaDatosInscriptas();
+        jBInscribir.setEnabled(true);
+        jBInscribir.setEnabled(false);
+    }//GEN-LAST:event_jRBMateriasInscriptasActionPerformed
+
+     private void jBInscribirActionPerformed(java.awt.event.ActionEvent evt) {                                            
+        int filaSeleccionada=jTable1.getSelectedRow();
+        if(filaSeleccionada!=-1){
+            Alumno a=(Alumno)jCBAlumnos.getSelectedItem();
+            
+            int idMateria=(Integer)modelo.getValueAt(filaSeleccionada, 0);
+            String nombreMateria=(String)modelo.getValueAt(filaSeleccionada, 1);
+            int anio=(Integer)modelo.getValueAt(filaSeleccionada, 2);
+            Materia m=new Materia(idMateria,nombreMateria,anio,true);
+            
+            Inscripcion i=new Inscripcion(a,m,0);
+            inscData.guardarInscripcion(i);
+            borrarFilaTabla();
+        }
+    }             
+     private void jBAnularInsActionPerformed(java.awt.event.ActionEvent evt) {                                            
+         int filaSeleccionada=jTable1.getSelectedRow();
+        if(filaSeleccionada!=-1){
+            Alumno a=(Alumno)jCBAlumnos.getSelectedItem();
+            
+            int idMateria=(Integer)modelo.getValueAt(filaSeleccionada, 0);
+      
+            
+            inscData.borrarInscripcionMateriaAlumno(a.getIdAlumno(), idMateria); 
+            borrarFilaTabla();
+    }                                           
+     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBAnularIns;
     private javax.swing.JButton jBInscribir;
     private javax.swing.JButton jBSalir;
-    private javax.swing.JComboBox<String> jCBAlumnos;
+    private javax.swing.JComboBox<Alumno> jCBAlumnos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -164,4 +271,111 @@ public class MenuInscripciones extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
+    
+    private void armarCabeceraTabla(){
+        ArrayList<Object> filaCabecera = new ArrayList<>();
+        filaCabecera.add("dni");
+        filaCabecera.add("Nombre");
+        filaCabecera.add("Anio");
+        for(Object it: filaCabecera){
+            modelo.addColumn(it);
+        }
+        jTable1.setModel(modelo);
+        
+        }
+    
+    private void borrarFilaTabla(){
+        int indice = modelo.getRowCount() -1;
+        
+        for (int i = indice;i>=0;i--){
+        modelo.removeRow(i);
+        }
+  
+    }
+    
+    private void cargaDatosNoInscriptas(){ 
+        //borrarFilasTabla();
+        Alumno selec = (Alumno)jCBAlumnos.getSelectedItem();
+     try {
+            Alumno alum = (Alumno) jCBAlumnos.getSelectedItem();
+
+            //preparo la consulta
+            String SQL = " SELECT idInscripto, Dni, Nombre ,anio\n"
+                    + "FROM Alumnos JOIN Inscripcion on Alumnos.idAlumno = Inscripcion.idAlumno \n"
+                    + "WHERE inscripcion.idAlumno = ? AND ";
+
+            PreparedStatement ps;
+            ps = con.prepareStatement(SQL);
+            //seteo el ? con el id del alumno que esta seleccionado en el jcombobox
+            ps.setInt(1, alum.getIdAlumno());
+            //se ejecuta la consulta
+            ResultSet resultado = ps.executeQuery();
+
+            while (resultado.next()) {
+                //ya recibi los datos de la consulta.
+                //añado a la tabla, el elemento en iteracion con un addRow, se añade en forma de arreglo.
+                modelo.addRow(new Object[]{resultado.getInt("idInscripto"), resultado.getInt("idMateria"), resultado.getString("nombre"), resultado.getInt("anio"), resultado.getInt("nota")});
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MenuCargaNotas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        for(Materia m: ListaM){
+            modelo.addRow(new Object[] { m.getIdMateria(), m.getNombre(), m.getAnioMateria()});
+            
+        }    
+    
+    }
+   
+
+     private void cargaDatosInscriptas(){  //borrarFilasTabla();
+       
+     try {
+            Alumno alum = (Alumno) jCBAlumnos.getSelectedItem();
+
+            //preparo la consulta
+            String SQL = " SELECT materia.idMateria, materia.nombre ,materia.anio\n"
+                    + "FROM materia JOIN inscripcion on materia.idMateria = inscripcion.idMateria\n"
+                    + "WHERE inscripcion.idAlumno = ?";
+
+            PreparedStatement ps;
+            ps = con.prepareStatement(SQL);
+            //seteo el ? con el id del alumno que esta seleccionado en el jcombobox
+            ps.setInt(1, alum.getIdAlumno());
+            //se ejecuta la consulta
+            ResultSet resultado = ps.executeQuery();
+
+            while (resultado.next()) {
+                //ya recibi los datos de la consulta.
+                //añado a la tabla, el elemento en iteracion con un addRow, se añade en forma de arreglo.
+                modelo.addRow(new Object[]{resultado.getInt("idMateria"),resultado.getString("nombre"), resultado.getInt("anio")});
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MenuCargaNotas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        }    
+    
+
+
+       private void cargarAlumnos() throws SQLException {
+        //cargar alumnos del jcombobox 
+        //hacer consulta pidiendo todos los alumnos activos
+        //recorrerlos y añadirlos al jcombobox
+
+        String SQL = "SELECT* FROM alumno";
+        PreparedStatement ps = con.prepareStatement(SQL);
+        ResultSet resultado = ps.executeQuery();
+
+        while (resultado.next()) {
+            //recorro la tabla de resultados de la consulta con next, y creo los objetos clase Alumno y los añado con add.item
+            //*resultado.getDate("fechaNacimiento").toLocalDate() convierto el Date de la base de datos en un LocalDate.
+            jCBAlumnos.addItem(new Alumno(resultado.getInt("idAlumno"), resultado.getInt("dni"), resultado.getString("apellido"), resultado.getString("nombre"), resultado.getDate("fechaNacimiento").toLocalDate(), resultado.getBoolean("estado")));
+
+        }
+
+    }
+     
 }
+

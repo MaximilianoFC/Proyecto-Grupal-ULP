@@ -8,6 +8,7 @@ package Proyecto.AccesoADatos;
 import Entidades.Alumno;
 import Entidades.Inscripcion;
 import Entidades.Materia;
+import Proyecto.Vistas.MenuInscripciones;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -24,6 +25,8 @@ import javax.swing.JOptionPane;
  * @author Ivana
  */
 public class InscripcionData {
+
+   
     private Connection con=null;
     
     public InscripcionData(){;
@@ -34,7 +37,7 @@ public class InscripcionData {
     
     public void guardarInscripcion (Inscripcion insc){
     
-    String sql = "INSERT INTO Inscripcion(idalumno, idMateria, nota) VALUE (?,?,?)";
+    String sql = "INSERT INTO Inscripcion(idAlumno, idMateria, nota) VALUE (?,?,?)";
     
     try{
         PreparedStatement ps=con.prepareStatement (sql,Statement.RETURN_GENERATED_KEYS);
@@ -101,33 +104,33 @@ public class InscripcionData {
         
     }
     
-    public List<Inscripcion> obtenerInscripciones(){
-    
-        ArrayList<Inscripcion> cursadas=new ArrayList<>();
-        
-        String sql="SELECT * FROM Inscripcion";
-        
-        try {
-            PreparedStatement ps=con.prepareStatement(sql);
-            ResultSet rs=ps.executeQuery();
-            while(rs.next()){
-            
-            Inscripcion insc=new Inscripcion();
-            insc.setIdInscripcion(rs.getInt("idInscripcion"));
-            Alumno alu=ad.buscarAlumno(rs.getInt("idAlumno"));
-            Materia mat=md.buscarMateria(rs.getInt("idMateria"));
-            insc. setAlumno(alu);
-            insc.setMateria(mat);
-            insc.setNota(rs.getDouble("nota"));
-            cursadas.add(insc);
-           }
-           ps.close();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Inscripcion");
-        }
-        
-        return cursadas;
-    }
+//    public List<Inscripcion> obtenerInscripciones(){
+//    
+//        ArrayList<Inscripcion> cursadas=new ArrayList<>();
+//        
+//        String sql="SELECT * FROM Inscripcion";
+//        
+//        try {
+//            PreparedStatement ps=con.prepareStatement(sql);
+//            ResultSet rs=ps.executeQuery();
+//            while(rs.next()){
+//            
+//            Inscripcion insc=new Inscripcion();
+//            insc.setIdInscripcion(rs.getInt("idInscripcion"));
+//            Alumno alu=ad.buscarAlumno(rs.getInt("idAlumno"));
+//            Materia mat=md.buscarMateria(rs.getInt("idMateria"));
+//            insc. setAlumno(alu);
+//            insc.setMateria(mat);
+//            insc.setNota(rs.getDouble("nota"));
+//            cursadas.add(insc);
+//           }
+//           ps.close();
+//        } catch (SQLException ex) {
+//            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Inscripcion");
+//        }
+//        
+//        return cursadas;
+//    }
 }
    
 

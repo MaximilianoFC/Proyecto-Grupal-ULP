@@ -215,11 +215,8 @@ public class MenuCargaNotas extends javax.swing.JInternalFrame {
 //luego de hacer el update, se muestra un mensaje.
             JOptionPane.showMessageDialog(rootPane, "notas guardadas");
        
-        } catch (SQLException ex) {
+        } catch (SQLException | NumberFormatException ex) {
             JOptionPane.showMessageDialog(rootPane, "error al guardar notas, ingrese numeros enteros.");
-         }
-         catch (NumberFormatException ex){
-             JOptionPane.showMessageDialog(rootPane, "error al guardar notas, ingrese numeros enteros");
          }
     }//GEN-LAST:event_jBGuardarActionPerformed
 

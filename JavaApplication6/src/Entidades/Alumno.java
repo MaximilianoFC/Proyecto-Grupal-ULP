@@ -87,9 +87,9 @@ public class Alumno {
         this.estado = estado;
     }
 
-    @Override
+      @Override
     public String toString() {
-        return "idAlumno:" + idAlumno + ", DNI:" + dni + ", apellido:" + apellido + ", Nombre:" + Nombre + ", fechaNac:" + fechaNac + ", estado=" + estado + '}';
+        return "idAlumno:" + idAlumno + ", DNI:" + dni + ", apellido:"+ apellido+", Nombre:" + Nombre + ", fechaNac:" + fechaNac + ", estado=" + estado + '}';
     }
     
 }
