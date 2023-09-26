@@ -5,6 +5,7 @@ import Entidades.Materia;
 import Proyecto.AccesoADatos.Conexion;
 import Proyecto.AccesoADatos.MateriaData;
 import java.sql.Connection;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 /*
@@ -12,8 +13,12 @@ import javax.swing.JOptionPane;
  */
 public class MenuMaterias extends javax.swing.JInternalFrame {
  Connection con = Conexion.getConexion();
-
  
+ //Instancio un objeto tipo MateriaData que usare para llamar a los metodos 
+ //de dicha clase
+ MateriaData materiaData=new MateriaData();
+
+
  
     public MenuMaterias() {
         initComponents();
@@ -190,22 +195,32 @@ public class MenuMaterias extends javax.swing.JInternalFrame {
 
     private void jBGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBGuardarActionPerformed
 
-         MateriaData materiaData=new MateriaData();
-        
+        //Si el JTextField Codigo esta vacio se guarda una nueva materia
+
         if ("".equals(jTCodigo.getText())) {
-        String nombre=jTNombre.getText();
         
-        String texto1=jTAño.getText();
-        int anio=Integer.parseInt(texto1);
-        
-        boolean activo = jRBEstado.isSelected();
-        
-        Materia materia=new Materia(nombre, anio, activo);
-       
-        materiaData.guardarMateria(materia);
-        
+            //Guardo el nombre ingresado en una variable
+            String nombre=jTNombre.getText();
+
+            //Guardo el año ingresado en una variable
+            String texto1=jTAño.getText();
+            int anio=Integer.parseInt(texto1);
+
+            //Guardo el estado en una variable
+            boolean activo = jRBEstado.isSelected();
+
+            //Instancio un objeto de tipo materia y le paso las variables 
+            //previas por parametro
+            Materia materia=new Materia(nombre, anio, activo);
+
+            //Llamo al metodo guardarMateria de la clase MateriaData y 
+            //le paso la materia previamente instanciada por parametro
+            materiaData.guardarMateria(materia);
+
         }
         
+        //Si el JTextField Codigo no esta vacio es porque previamente se busco 
+        //una materia por su id para modificar algun dato de esta
         String texto=jTCodigo.getText();
         int idMateria=Integer.parseInt(texto);
         
@@ -218,26 +233,39 @@ public class MenuMaterias extends javax.swing.JInternalFrame {
         
         Materia materia=new Materia(idMateria, nombre, anio, activo);
         materiaData.modificarMateria(materia);
+
        
     }//GEN-LAST:event_jBGuardarActionPerformed
 
     private void jBBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBuscarActionPerformed
         // TODO add your handling code here:
+        
+        try{
+        //Guardo en una variable el ingreso en el jTextField Codigo
         String texto=jTCodigo.getText();
         int idMateria=Integer.parseInt(texto);
-        
-        MateriaData materiaData=new MateriaData();
+
+        //Guardo en un objeto tipo materia la materia que devuelve 
+        //el metodo buscarMateria por su id
         Materia materiaEncontrada = materiaData.buscarMateria(idMateria);
+        
+        
         jTNombre.setText(materiaEncontrada.getNombre());
+        
         String anio=String.valueOf(materiaEncontrada.getAnioMateria());
         jTAño.setText(anio);
+       
         jRBEstado.setSelected(materiaEncontrada.isActivo());
         
+        } catch (NumberFormatException e){
+            JOptionPane.showMessageDialog(null, "Debes ingresar un codigo valido");
+        }
     }//GEN-LAST:event_jBBuscarActionPerformed
 
     private void jBEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBEliminarActionPerformed
-        // TODO add your handling code here:
-         String texto=jTCodigo.getText();
+
+        
+        String texto=jTCodigo.getText();
         int idMateria=Integer.parseInt(texto);
         
         MateriaData materiaData=new MateriaData();
