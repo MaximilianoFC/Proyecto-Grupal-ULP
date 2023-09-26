@@ -100,7 +100,8 @@ public class InscripcionData {
         }
         
     }
-    
+}
+   /* 
     public List<Inscripcion> obtenerInscripciones(){
     
         ArrayList<Inscripcion> cursadas=new ArrayList<>();
@@ -131,3 +132,4 @@ public class InscripcionData {
 }
    
 
+*/
