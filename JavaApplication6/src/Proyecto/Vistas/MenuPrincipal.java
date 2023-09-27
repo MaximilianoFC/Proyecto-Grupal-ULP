@@ -8,7 +8,6 @@ package Proyecto.Vistas;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JFrame;
 
 
 public class MenuPrincipal extends javax.swing.JFrame {
@@ -58,7 +57,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMenuNotas = new javax.swing.JMenuItem();
         jMConsultas = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
-        jMSalir = new javax.swing.JMenu();
 
         jMenu1.setText("File");
         jMenuBar2.add(jMenu1);
@@ -98,7 +96,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jDPEscritorio.setLayout(jDPEscritorioLayout);
         jDPEscritorioLayout.setHorizontalGroup(
             jDPEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 600, Short.MAX_VALUE)
+            .addGap(0, 657, Short.MAX_VALUE)
         );
         jDPEscritorioLayout.setVerticalGroup(
             jDPEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -161,21 +159,13 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         jMenuListadoPorMaterias.add(jMConsultas);
 
-        jMSalir.setText("Salir");
-        jMSalir.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jMSalirMouseClicked(evt);
-            }
-        });
-        jMenuListadoPorMaterias.add(jMSalir);
-
         setJMenuBar(jMenuListadoPorMaterias);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDPEscritorio, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
+            .addComponent(jDPEscritorio, javax.swing.GroupLayout.DEFAULT_SIZE, 657, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -296,7 +286,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMAlumno;
     private javax.swing.JMenu jMConsultas;
     private javax.swing.JMenu jMMateria;
-    private javax.swing.JMenu jMSalir;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu10;
     private javax.swing.JMenu jMenu2;
