@@ -5,12 +5,24 @@
  */
 package Proyecto.Vistas;
 
+import Proyecto.AccesoADatos.Conexion;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Villa
  */
 public class MenuConsultaAlumnos extends javax.swing.JInternalFrame {
+Connection con = Conexion.getConexion();
 
+private boolean actualizarComboBox = true;
     /**
      * Creates new form MenuConsultaAlumnos
      */
@@ -31,7 +43,7 @@ public class MenuConsultaAlumnos extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         jCBMaterias = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableAlumnos = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
 
         setClosable(true);
@@ -43,12 +55,16 @@ public class MenuConsultaAlumnos extends javax.swing.JInternalFrame {
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jLabel1.setText("Listado de Alumnos por Materia");
 
-        jLabel2.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel2.setText("Seleccione una materia");
 
-        jCBMaterias.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jCBMaterias.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Click me" }));
+        jCBMaterias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCBMateriasActionPerformed(evt);
+            }
+        });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableAlumnos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -56,11 +72,11 @@ public class MenuConsultaAlumnos extends javax.swing.JInternalFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID", "DNI", "Apellido", "Nombre"
             }
         ));
-        jTable1.setPreferredSize(new java.awt.Dimension(630, 550));
-        jScrollPane1.setViewportView(jTable1);
+        jTableAlumnos.setPreferredSize(new java.awt.Dimension(630, 550));
+        jScrollPane1.setViewportView(jTableAlumnos);
 
         jButton1.setText("Salir");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -109,6 +125,77 @@ public class MenuConsultaAlumnos extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jCBMateriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBMateriasActionPerformed
+
+        if (actualizarComboBox) {
+            buscarMaterias();
+        }
+        if (!actualizarComboBox) {
+        mostrarDatosDelAlumno();
+         }
+    }//GEN-LAST:event_jCBMateriasActionPerformed
+
+    private void buscarMaterias() {
+       
+    try {
+
+        // Consulta SQL para obtener las materias
+        String sql = "SELECT nombre FROM materia";
+
+        PreparedStatement preparedStatement = con.prepareStatement(sql);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        jCBMaterias.removeAllItems();
+        while (resultSet.next()) {
+            String nombreMateria = resultSet.getString("nombre");
+            jCBMaterias.addItem(nombreMateria); // Agrega cada materia directamente al JComboBox
+        }
+       actualizarComboBox = false;
+    } catch (SQLException ex) {
+        Logger.getLogger(MenuConsultaAlumnos.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+    }
+     
+   private void mostrarDatosDelAlumno() {
+    String materiaSeleccionada = (String) jCBMaterias.getSelectedItem();
+    
+    if (materiaSeleccionada != null) {
+        DefaultTableModel model = (DefaultTableModel) jTableAlumnos.getModel();
+        model.setRowCount(0); 
+        // Limpiamos la tabla antes de agregar nuevos datos
+        try {
+            // Consulta SQL para obtener la ID de la materia a partir de su nombre
+            String sqlObtenerIdMateria = "SELECT idMateria FROM materia WHERE nombre = ?";
+            
+            PreparedStatement preparedStatementObtenerIdMateria = con.prepareStatement(sqlObtenerIdMateria);
+            preparedStatementObtenerIdMateria.setString(1, materiaSeleccionada);
+            
+            ResultSet resultSetIdMateria = preparedStatementObtenerIdMateria.executeQuery();
+            
+            if (resultSetIdMateria.next()) {
+                int idMateria = resultSetIdMateria.getInt("idMateria");
+                
+                // Consulta SQL para obtener los datos de los alumnos de la materia seleccionada
+                String sql = "SELECT a.idAlumno, a.dni, a.nombre, a.apellido FROM alumno a " +
+                             "INNER JOIN inscripcion i ON a.idAlumno = i.idAlumno " +
+                             "WHERE i.idMateria = ?";
+                
+                PreparedStatement preparedStatement = con.prepareStatement(sql);
+                preparedStatement.setInt(1, idMateria);
+                ResultSet resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    int idAlumno = resultSet.getInt("idAlumno");
+                    String dni = resultSet.getString("DNI");
+                    String nombre = resultSet.getString("nombre");
+                    String apellido = resultSet.getString("apellido");
+                    // Agregar fila a la tabla
+                    model.addRow(new Object[] { idAlumno, dni, nombre, apellido });
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MenuConsultaAlumnos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -116,6 +203,6 @@ public class MenuConsultaAlumnos extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTableAlumnos;
     // End of variables declaration//GEN-END:variables
 }

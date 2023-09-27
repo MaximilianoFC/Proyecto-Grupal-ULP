@@ -215,8 +215,14 @@ public class MenuPrincipal extends javax.swing.JFrame {
         // Abrir menu manejo inscripciones
         jDPEscritorio.removeAll();
         jDPEscritorio.repaint();
-        MenuInscripciones MI = new MenuInscripciones();
-        MI.setVisible(true);
+        MenuInscripciones MI = null;
+        try {
+            MI = new MenuInscripciones();
+        } catch (SQLException ex) {
+            Logger.getLogger(MenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+         MI.setVisible(true);
+        }
+       
         jDPEscritorio.add(MI);
         jDPEscritorio.moveToFront(MI);
         
